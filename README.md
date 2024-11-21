@@ -16,7 +16,7 @@ Metadata: Includes essential metadata for easy management and identification of 
 ### Pull the Image
 First, pull the image from Docker Hub:
 ```sh
-docker pull aleslanger/mailcatcher:last
+docker pull aleslanger/mailcatcher:latest
 ```
 ### Run the Container
 Start the MailCatcher container using the following command:
@@ -26,7 +26,7 @@ docker run -d \
   --name mailcatcher \
   -p 1025:1025 \
   -p 1080:1080 \
-  aleslanger/mailcatcher:last
+  aleslanger/mailcatcher:latest
 ```
 This command maps port 1025 (SMTP) and port 1080 (web interface) on your host to the container.
 
@@ -53,7 +53,7 @@ docker run -d \
   -p 1025:1025 \
   -p 1080:1080 \
   -v mailcatcher_data:/home/mailcatcher \
-  yourusername/mailcatcher:last
+  aleslanger/mailcatcher:latest
 ```
 ### Using Docker Compose
 #### create a docker-compose.yml file:
@@ -63,7 +63,7 @@ version: '3.8'
 
 services:
   mailcatcher:
-    image: aleslanger/mailcatcher:last
+    image: aleslanger/mailcatcher:latest
     container_name: mailcatcher
     ports:
       - "1025:1025"
