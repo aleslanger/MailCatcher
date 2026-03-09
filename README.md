@@ -1,7 +1,7 @@
 # MailCatcher Docker Image
 
 ## Description
-This Docker image provides a simple and efficient way to run MailCatcher—a tool for capturing emails during application development. The image is based on Ruby 2.7 and Alpine Linux 3.18, ensuring compatibility, low size, and high performance.
+This Docker image provides a simple and efficient way to run MailCatcher—a tool for capturing emails during application development. The image is based on Ruby 3.4 and Alpine Linux 3.21, ensuring compatibility, low size, and high performance.
 
 ## What is MailCatcher?
 MailCatcher is a lightweight SMTP server and web interface that allows developers to capture and view sent emails without the need for a real email server. It is ideal for testing email functionalities in your applications.
@@ -59,8 +59,6 @@ docker run -d \
 #### create a docker-compose.yml file:
 
 ```yaml
-version: '3.8'
-
 services:
   mailcatcher:
     image: aleslanger/mailcatcher:latest

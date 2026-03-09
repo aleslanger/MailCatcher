@@ -1,23 +1,24 @@
 # Stage 1: Build
-FROM ruby:3.3-alpine3.18 AS builder
+FROM ruby:3.4-alpine3.21 AS builder
 
 # Define environment variables
 ENV MAILCATCHER_VERSION=0.10.0 \
     BUILD_DEPS="build-base sqlite-dev"
 
-# Install build dependencies, update RubyGems, install necessary gems, and clean up
-RUN apk add --no-cache $BUILD_DEPS sqlite-libs curl \
-    && gem update --system \
-    && gem install sqlite3 -v '~>1.3' --platform=ruby --no-document \
+# Install build dependencies, install necessary gems, and clean up
+RUN apk add --no-cache $BUILD_DEPS sqlite-libs \
+    && gem install sqlite3 -v '~>2.0' --platform=ruby --no-document \
     && gem install mailcatcher -v "${MAILCATCHER_VERSION}" --no-document \
     && apk del $BUILD_DEPS
 
 # Stage 2: Final
-FROM ruby:3.3-alpine3.18
+FROM ruby:3.4-alpine3.21
+
+ENV MAILCATCHER_VERSION=0.10.0
 
 LABEL maintainer="ales.langer@yahoo.com" \
-      version="0.1" \
-      description="MailCatcher Docker image based on Ruby 3.3 and Alpine 3.18"
+      version="${MAILCATCHER_VERSION}" \
+      description="MailCatcher Docker image based on Ruby 3.4 and Alpine 3.21"
 
 # Install runtime dependencies and create a non-privileged user and group in one RUN command
 RUN apk add --no-cache sqlite-libs curl \
@@ -29,7 +30,7 @@ COPY --from=builder /usr/local/bundle /usr/local/bundle
 
 # Set the working directory and change ownership
 WORKDIR /home/mailcatcher
-RUN mkdir -p /home/mailcatcher && chown mailcatcher:mailcatcher /home/mailcatcher
+RUN chown mailcatcher:mailcatcher /home/mailcatcher
 
 # Expose necessary ports
 EXPOSE 1025 1080
